@@ -1,8 +1,8 @@
 // Import Custom SB Admin 2 Variables (Overrides Default Bootstrap Variables)
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css";
 @import "variables.scss";
 
 // Import Bootstrap
-// @import "../vendor/bootstrap/scss/bootstrap.scss";
 @import "~bootstrap/scss/bootstrap.scss";
 
 // Import Custom SB Admin 2 Mixins and Components
@@ -22,7 +22,6 @@
 
 @font-face {
   font-family: "Vazir";
-//   src: url("../fonts/Vazir.eot");
   src: url("../../fonts/Vazir.eot");
   /* IE9 Compat Modes */
   src: url("../../fonts/Vazir.eot?#iefix") format("embedded-opentype"),
@@ -36,7 +35,6 @@ body {
   direction: rtl;
   text-align: right !important;
   font-family: "Vazir" !important;
-//   line-height: 1.6;
 }
 
 #registerCheckBox::before{
