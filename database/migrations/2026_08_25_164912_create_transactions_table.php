@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('user_id')->nullable();
-            $table->foreign('user_id ')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->foreignId('order_id')->nullable();
-            $table->foreign('order_id ')->references('id')->on('orders')->onDelete('cascade');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
 
             $table->unsignedInteger('amount');
             $table->string('ref_id')->nullable();

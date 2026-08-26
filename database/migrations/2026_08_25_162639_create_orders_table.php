@@ -21,14 +21,14 @@ return new class extends Migration
             $table->foreign('address_id')->references('id')->on('user_addresses')->onDelete('cascade');
 
             $table->foreignId('coupon_id')->nullable();
-            $table->foreign('coupon_id ')->references('id')->on('coupons')->onDelete('cascade');
+            $table->foreign('coupon_id')->references('id')->on('coupons')->onDelete('cascade');
 
             $table->tinyInteger('status')->default(0);
             $table->unsignedInteger('total_amount');
             $table->unsignedInteger('delivery_amount')->default(0);
             $table->unsignedInteger('coupon_amount')->default(0);
             $table->unsignedInteger('paying_amount');
-            $table->enum('payment_type',['pos','cash','shabaNumber','cardToCard','online']);
+            $table->enum('payment_type', ['pos', 'cash', 'shabaNumber', 'cardToCard', 'online']);
             $table->tinyInteger('payment_status')->default(0);
             $table->text('description')->nullable();
 

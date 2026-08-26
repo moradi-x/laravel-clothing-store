@@ -15,19 +15,19 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('order_id')->nullable();
-            $table->foreign('order_id ')->references('id')->on('orders')->onDelete('cascade');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
 
             $table->foreignId('product_id')->nullable();
-            $table->foreign('product_id ')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
 
             $table->foreignId('product_variation_id')->nullable();
-            $table->foreign('product_variation_id ')->references('id')->on('product_variations')->onDelete('cascade');
+            $table->foreign('product_variation_id')->references('id')->on('product_variations')->onDelete('cascade');
 
             $table->unsignedInteger(column: 'price');
             $table->unsignedInteger(column: 'quantity');
             $table->unsignedInteger(column: 'subtotal');
 
-            
+
 
             $table->timestamps();
         });
