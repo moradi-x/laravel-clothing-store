@@ -116,7 +116,7 @@
                             data-live-search= "true">
                             @foreach ($attributes as $attribute)
                                 <option value="{{ $attribute->id }}"
-                                    {{ in_array($attribute->id, $category->attributes()->pluck('id')->toArray()) ? 'select' : '' }}>
+                                    {{ in_array($attribute->id, $category->attributes()->pluck('id')->toArray()) ? 'selected' : '' }}>
                                     {{ $attribute->name }}
                                 </option>
                             @endforeach
@@ -129,7 +129,9 @@
                         <select id="attributeIsFilterSelect" name="attribute_is_filter_ids[]" class="form-control" multiple
                             data-live-search= "true">
                             @foreach ($category->attributes()->wherePivot('is_filter', 1)->get() as $attribute)
-                                <option value="{{ $attribute->id }}">{{ $attribute->name }}</option>
+                                <option value="{{ $attribute->id }}" selected>
+                                    {{ $attribute->name }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -137,8 +139,8 @@
                     <div class="form-group col-md-3">
                         <label for="attribute_is_filter_ids">انتخاب ویژگی متغیر </label>
                         <select id="variationSelect" name="variation_id" class="form-control" data-live-search= "true">
-                            <option
-                                value="{{ $category->attributes()->wherePivot('is_variation', 1)->first()->id }}" selected >
+                            <option value="{{ $category->attributes()->wherePivot('is_variation', 1)->first()->id }}"
+                                selected>
                                 {{ $category->attributes()->wherePivot('is_variation', 1)->first()->name }}
                             </option>
                         </select>
@@ -147,13 +149,12 @@
                     <div class="form-group col-md-3">
                         <label for="icon"> ایکون</label>
                         <input class="form-control" id="icon" name="icon" type="text"
-                            value="{{ $category->icon) }}">
+                            value="{{ $category->icon }}">
                     </div>
 
                     <div class="form-group col-md-12">
                         <label for="description">توضیحات </label>
-                        <textarea class="form-control" id="description" name="description"
-                         value="{{ $category->description  }}"> </textarea>
+                        <textarea class="form-control" id="description" name="description" value="{{ $category->description }}"> </textarea>
                     </div>
 
                 </div>

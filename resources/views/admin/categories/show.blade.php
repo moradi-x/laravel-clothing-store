@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 @section('title')
-    - create category
+    - create categories
 @endsection
 @section('content')
     <!-- show Row -->

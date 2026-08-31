@@ -1,7 +1,7 @@
 @extends('admin.layouts.admin')
 
 @section('title')
-    - index attribute
+    - index categories
 @endsection
 @section('content')
     <!-- Content Row -->

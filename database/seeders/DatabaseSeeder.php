@@ -23,8 +23,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CategorySeeder::class,
             AttributeSeeder::class,
-            BrandSeeder::class ,
+            BrandSeeder::class,
             AttributeCategorySeeder::class,
+            TagSeeder::class,
         ]);
     }
 }

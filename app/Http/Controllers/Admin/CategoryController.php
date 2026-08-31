@@ -30,7 +30,7 @@ class CategoryController extends Controller
 
         $request->validate(rules: [
             'name' => ['required'],
-            'slug' => ['required', 'unique:categories'],
+            'slug' => ['required', 'unique:categories,slug'],
             'parent_id' => ['required'],
 
             'attribute_ids' => ['required'],
@@ -88,8 +88,51 @@ class CategoryController extends Controller
         ));
     }
 
-    public function update(Request $request, string $id) {}
+    public function update(Request $request, Category $category) {
+        
+        $request->validate(rules: [
+            'name' => ['required'],
+            'slug' => ['required', 'unique:categories,slug,'.$category->id],
+            'parent_id' => ['required'],
 
+            'attribute_ids' => ['required'],
+            'attribute_is_filter_ids' => ['required'],
+            'variation_id' => ['required'],
+        ]);
+
+        try {
+            DB::beginTransaction();
+            $category->update([
+                'name' => $request->name,
+                'slug' => $request->slug,
+                'is_active' => $request->is_active,
+                'parent_id' => $request->parent_id,
+            ]);
+
+            $category->attributes()->detach();
+
+            foreach ($request->attribute_ids as $attributeId) {
+                $attribute = Attribute::findOrFail($attributeId);
+                $attribute->categories()->attach($category->id, [
+                    'is_filter' => in_array($attributeId, $request->attribute_is_filter_ids) ? 1 : 0,
+                    'is_variation' => $request->variation_id == $attributeId ? 1 : 0,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+            DB::commit();
+        } catch (\Throwable $ex) {
+            DB::rollBack();
+            // $error = $ex->getMessage();
+
+            alert()->error('مشکل در ویرایش دسته بندی',  $ex->getMessage())->persistent('حله');
+            return redirect()->back();
+        }
+
+        alert()->success('دسته بندی مورد نظر با موفقیت ویرایش شد', 'با تشکر');
+
+        return redirect()->route('admin.categories.index');
+    }
 
     public function destroy(string $id) {}
 }

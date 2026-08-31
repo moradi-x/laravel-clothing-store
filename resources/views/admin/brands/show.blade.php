@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 @section('title')
-   - create brands
+   - show brands
 @endsection
 @section('content')
     <!-- show Row -->
