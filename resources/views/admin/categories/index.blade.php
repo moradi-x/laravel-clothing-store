@@ -1,7 +1,7 @@
 @extends('admin.layouts.admin')
 
 @section('title')
-    - index brands
+    - index attribute
 @endsection
 @section('content')
     <!-- Content Row -->
@@ -11,11 +11,11 @@
         <div class="col-xl-12 col-md-12 mb-4 p-md-5 bg-white ">
             <div class=" d-flex justify-content-between mb-4">
                 <h5 class="font-weight-bold">
-                    لیست برند ها ( {{ $brands->total() }} )
+                    لیست ویژگی ها ( {{ $attributes->total() }} )
                 </h5>
-                <a class="btn btn-sm btn-outline-primary" href="{{ route('admin.brands.create') }}">
+                <a class="btn btn-sm btn-outline-primary" href="{{ route('admin.attributes.create') }}">
                     <i class="fa fa-plus"></i>
-                    ایجاد برند
+                    ایجاد ویژگی
                 </a>
             </div>
             <div>
@@ -24,28 +24,24 @@
                         <tr>
                             <th> # </th>
                             <th> نام </th>
-                            <th> وضعیت </th>
                             <th> عملیات </th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($brands as $key => $brand)
+                        @foreach ($attributes as $key => $attribute)
                             <tr>
                                 <th>
-                                    {{ $brands->firstitem() + $key }}
+                                    {{ $attributes->firstitem() + $key }}
                                 </th>
                                 <th>
-                                    {{ $brand->name }}
+                                    {{ $attribute->name }}
                                 </th>
-                                <th>
-                                    <span class="{{ $brand->getRawOriginal('is_active') ? 'text-success' : 'text-danger' }}">
-                                        {{ $brand->is_active }} </span>
-                                </th>
+
                                 <th>
                                     <a class="btn btn-sm btn-outline-success"
-                                        href="{{ route('admin.brands.show', ['brand' => $brand->id]) }}">نمایش</a>
+                                        href="{{ route('admin.attributes.show', ['attribute' => $attribute->id]) }}">نمایش</a>
                                     <a class="btn btn-sm btn-outline-info mr-3 "
-                                        href="{{ route('admin.brands.edit', ['brand' => $brand->id]) }}">ویرایش</a>
+                                        href="{{ route('admin.attributes.edit', ['attribute' => $attribute->id]) }}">ویرایش</a>
                                 </th>
                             </tr>
                         @endforeach

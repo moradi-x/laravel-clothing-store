@@ -1,20 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
+use App\Models\Attribute;
 use Illuminate\Http\Request;
+use Symfony\Component\CssSelector\Node\AttributeNode;
 
-class BrandController extends Controller
+class AttributeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $brands = Brand::oldest()->paginate(20);
-        return view('admin.brands.index', compact('brands'));
+
+        $attributes = Attribute::oldest()->paginate(20);
+        return view('admin.attributes.index', compact('attributes'));
     }
 
     /**
@@ -22,7 +24,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        return view('admin.brands.create');
+        return view('admin.attributes.create');
     }
 
     /**
@@ -34,49 +36,47 @@ class BrandController extends Controller
             "name" => ['required']
         ]);
 
-        Brand::create([
+        Attribute::create([
             'name' => $request->name,
-            'is_active' => $request->is_active
         ]);
 
-        alert()->success('برند مورد نظر با موفقیت ایجاد شد', 'با تشکر');
+        alert()->success('ویژگی مورد نظر با موفقیت ایجاد شد', 'با تشکر');
 
-        return redirect()->route('admin.brands.index');
+        return redirect()->route('admin.attributes.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Brand $brand)
+    public function show(Attribute $attribute)
     {
-        return view('admin.brands.show', compact('brand'));
+        return view('admin.attributes.show', compact('attribute'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Brand $brand)
+    public function edit(Attribute $attribute)
     {
-        return view('admin.brands.edit', compact('brand'));
+        return view('admin.attributes.edit', compact('attribute'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, brand $brand)
+    public function update(Request $request, Attribute $attribute)
     {
         $request->validate(rules: [
             "name" => ['required']
         ]);
 
-        $brand->update([
+        $attribute->update([
             'name' => $request->name,
-            'is_active' => $request->is_active
         ]);
 
-        alert()->success('برند مورد نظر با موفقیت ویرایش شد', 'با تشکر');
+        alert()->success('ویژگی مورد نظر با موفقیت ویرایش شد', 'با تشکر');
 
-        return redirect()->route('admin.brands.index');
+        return redirect()->route('admin.attributes.index');
     }
 
     /**
