@@ -39,7 +39,8 @@
                                 </th>
                                 <th>
                                     <span class="{{ $brand->getRawOriginal('is_active') ? 'text-success' : 'text-danger' }}">
-                                        {{ $brand->is_active }} </span>
+                                        {{ $brand->is_active }}
+                                     </span>
                                 </th>
                                 <th>
                                     <a class="btn btn-sm btn-outline-success"

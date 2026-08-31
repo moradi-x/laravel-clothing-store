@@ -51,7 +51,7 @@
         });
 
         $('#variationSelect').selectpicker({
-            'title': 'انتخاب ویژگی'
+            'title': 'انتخاب متغیر'
         });
     </script>
 @endsection
@@ -73,12 +73,13 @@
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="name">نام</label>
-                        <input class="form-control" id="name" name="name" type="text">
+                        <input class="form-control" id="name" name="name" type="text" value="{{ old('name') }}">
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="slug">نام انگلیسی</label>
-                        <input class="form-control" id="slug" name="slug" type="text">
+                        <input class="form-control" id="slug" name="slug" type="text"
+                            value="{{ old('slug') }}">
                     </div>
 
                     <div class="form-group col-md-3">
@@ -123,18 +124,19 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                         <label for="icon"> ایکون</label>
-                        <input class="form-control" id="icon" name="icon" type="text">
+                        <label for="icon"> ایکون</label>
+                        <input class="form-control" id="icon" name="icon" type="text"
+                            value="{{ old('icon') }}">
                     </div>
 
                     <div class="form-group col-md-12">
-                          <label for="description">توضیحات </label>
-                        <textarea class="form-control" id="description" name="description" > </textarea> 
+                        <label for="description">توضیحات </label>
+                        <textarea class="form-control" id="description" name="description" value="{{ old('description') }}"> </textarea>
                     </div>
 
                 </div>
                 <button class="btn btn-outline-primary mt-5" type="submit">ثبت</button>
-                <a href="{{ route('admin.attributes.index') }}" class="btn btn-dark mt-5 mr-3">بازگشت</a>
+                <a href="{{ route('admin.categories.index') }}" class="btn btn-dark mt-5 mr-3">بازگشت</a>
             </form>
         </div>
     </div>

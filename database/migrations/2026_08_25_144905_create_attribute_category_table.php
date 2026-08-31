@@ -22,7 +22,8 @@ return new class extends Migration
             $table->boolean('is_filter')->default(0);
             $table->boolean('is_variation')->default(0);
 
-            $table->primary(['category_id','is_filter']);
+            // $table->primary(['category_id','is_filter']);
+            $table->primary(['category_id','attribute_id']);
             
             $table->timestamps();
         });

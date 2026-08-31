@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/admin-panel/dashboard', function () {
+    view('admin.dashboard');
 })->name('dashboard') ;
 
 

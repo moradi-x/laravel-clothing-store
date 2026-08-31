@@ -20,7 +20,8 @@
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="name">نام</label>
-                        <input class="form-control" id="name" name="name" type="text">
+                        <input class="form-control" id="name" name="name" type="text"
+                            value="{{ old('name') }} ">
                     </div>
                 </div>
                 <button class="btn btn-outline-primary mt-5" type="submit">ثبت</button>
