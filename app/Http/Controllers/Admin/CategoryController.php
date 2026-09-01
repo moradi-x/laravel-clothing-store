@@ -17,9 +17,13 @@ class CategoryController extends Controller
         return view('admin.categories.index', compact('categories'));
     }
 
-    public function create()
+    public function create(Category $category)
     {
-        $parentCategories  = Category::where('parent_id', 0)->get();
+        // فقط والد هارو نشون میده
+        // $parentCategories  = Category::where('parent_id', 0)->get(); 
+       
+        $parentCategories = Category::where('id', '!=', $category->id)->get();
+
         $attributes = Attribute::all();
         return view('admin.categories.create', compact('parentCategories', 'attributes'));
     }
@@ -76,20 +80,25 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
-        // $parentCategories  = Category::where('parent_id', 0)->get();
         $parentCategories = Category::where('id', '!=', $category->id)->get();
         $attributes = Attribute::all();
 
-        return view('admin.categories.edit', 
-        compact('category', 'parentCategories' , 'attributes'
-        ));
+        return view(
+            'admin.categories.edit',
+            compact(
+                'category',
+                'parentCategories',
+                'attributes'
+            )
+        );
     }
 
-    public function update(Request $request, Category $category) {
-        
+    public function update(Request $request, Category $category)
+    {
+
         $request->validate(rules: [
             'name' => ['required'],
-            'slug' => ['required', 'unique:categories,slug,'.$category->id],
+            'slug' => ['required', 'unique:categories,slug,' . $category->id],
             'parent_id' => ['required'],
 
             'attribute_ids' => ['required'],
@@ -132,4 +141,14 @@ class CategoryController extends Controller
     }
 
     public function destroy(string $id) {}
+
+    public function getCategoryAttribute(Category $category)
+    {
+        $attributes = $category->attributes()->wherePivot('is_variation', 0)->get();
+        $variation = $category->attributes()->wherePivot('is_variation', 1)->first();
+        return [
+            'attributes' => $attributes,
+            'variation' => $variation
+        ];
+    }
 }
