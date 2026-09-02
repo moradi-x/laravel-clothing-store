@@ -5,14 +5,14 @@ namespace App\Models;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
- 
+
 class Product extends Model
 {
-    use HasFactory , Sluggable;
+    use HasFactory, Sluggable;
     protected $table = "products";
-    protected $guarded = []; 
+    protected $guarded = [];
 
-            /**
+    /**
      * Return the sluggable configuration array for this model.
      *
      * @return array

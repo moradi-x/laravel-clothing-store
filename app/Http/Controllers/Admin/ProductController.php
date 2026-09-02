@@ -83,6 +83,25 @@ class ProductController extends Controller
                 'image' => $fileNameImage
             ]);
         }
+
+        $ProductAttributeController =  new ProductAttributeController();
+        $ProductAttributeController->store(
+            $request->attribute_ids,
+            $product
+        );
+
+        $category = Category::find($request->category_id);
+
+        $ProductVariationController =  new ProductVariationController();
+        $ProductVariationController->store(
+            $request->variation_values,
+            $category
+                ->attributes()
+                ->wherePivot('is_variation', 1)
+                ->first()
+                ->id,
+            $product
+        );
     }
 
 
