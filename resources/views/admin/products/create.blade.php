@@ -200,13 +200,13 @@
             @csrf
 
             <div class="form-row">
-
+                {{-- نام --}}
                 <div class="form-group col-md-3">
                     <label for="name">نام</label>
                     <input class="form-control" id="name" name="name" type="text"
                         value="{{ old('name') }} ">
                 </div>
-
+                {{--  برند --}}
                 <div class="form-group col-md-3">
                     <label for="brand_id">برند</label>
                     <select id="brandSelect" name="brand_id" class="form-control" data-live-search= "true">
@@ -215,7 +215,7 @@
                         @endforeach
                     </select>
                 </div>
-
+                {{--  وضعیت --}}
                 <div class="form-group col-md-3">
                     <label for="is_active">وضعیت</label>
                     <select class="form-control" id="is_active" name="is_active">
@@ -223,7 +223,7 @@
                         <option value="0">غیر فعال </option>
                     </select>
                 </div>
-
+                {{--  ویژگی --}}
                 <div class="form-group col-md-3">
                     <label for="tag_ids">ویژگی</label>
                     <select id="tagSelect" name="tag_ids[]" class="form-control" multiple data-live-search= "true">
@@ -232,19 +232,19 @@
                         @endforeach
                     </select>
                 </div>
-
+                {{--  توضیحات --}}
                 <div class="form-group col-md-12">
                     <label for="description">توضیحات </label>
                     <textarea class="form-control" id="description" name="description" value="{{ old('description') }}"> </textarea>
                 </div>
 
                 {{-- pdroduct images ection  --}}
-
                 <div class="col-md-12">
                     <hr>
                     <p>تصاویر محصول :</p>
                 </div>
 
+                 {{-- انتخاب تصویر --}}
                 <div class="form-group col-md-3 ">
                     <label for="primary_image">انتخاب تصویر اصلی</label>
                     <div class="custom-file">
@@ -256,7 +256,7 @@
                 <div class="form-group col-md-3 ">
                     <label for="images">انتخاب تصاویر </label>
                     <div class="custom-file">
-                        <input type="file" name="image[]" class="custom-file-input" id="images" multiple>
+                        <input type="file" name="images[]" class="custom-file-input" id="images" multiple>
                         <label for="images" class="custom-file-label">انتخاب فایل ها</label>
                     </div>
                 </div>
@@ -267,7 +267,7 @@
                     <hr>
                     <p> دسته بندی و ویژگی ها :</p>
                 </div>
-
+                {{--  دسته بندی --}}
                 <div class="col-md-12">
                     <div class="row justify-content-center">
                         <div class="form-group col-md-3">
@@ -283,6 +283,7 @@
                     </div>
                 </div>
 
+                {{--  افزودن قیمت و نمایش متغیر ها --}}
                 <div class="col-md-12" id="attributeContainer">
                     <div class="row" id="attributes"></div>
                     <div class="col-md-12" id="variationContainer">
@@ -297,6 +298,25 @@
                         </button>
                     </div>
                 </div>
+
+                {{-- delivery section --}}
+                <div class="col-md-12">
+                    <hr>
+                    <p> هزینه ارسال :</p>
+                </div>
+                {{-- هزینه ارسال --}}
+                <div class="form-group col-md-3">
+                    <label for="delivery_amount">هزینه ارسال</label>
+                    <input class="form-control" id="delivery_amount" name="delivery_amount" type="text"
+                        value="{{ old('delivery_amount') }} ">
+                </div>
+                {{-- هزینه اضافی --}}
+                <div class="form-group col-md-3">
+                    <label for="delivery_amount_per_product"> هزینه ارسال به ازای محصول اضافی</label>
+                    <input class="form-control" id="delivery_amount_per_product" name="delivery_amount_per_product" type="text"
+                        value="{{ old('delivery_amount_per_product') }} ">
+                </div>
+
             </div>
             <button class="btn btn-outline-primary mt-5" type="submit">ثبت</button>
             <a href="{{ route('admin.products.index') }}" class="btn btn-dark mt-5 mr-3">بازگشت</a>

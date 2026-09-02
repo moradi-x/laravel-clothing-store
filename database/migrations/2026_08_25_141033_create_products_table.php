@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string(column: 'primary_image');
             $table->text(column: 'description');
             $table->integer(column: 'status')->default(1);
-            $table->boolean(column: 'is_ative')->default(1);
+            $table->boolean(column: 'is_active')->default(1);
             $table->unsignedInteger(column: 'delivery_amount')->default(0);
             $table->unsignedInteger(column: 'delivery_amount_per_product')->nullable();
 
