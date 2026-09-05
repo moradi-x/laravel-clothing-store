@@ -21,7 +21,7 @@ class CategoryController extends Controller
     {
         // فقط والد هارو نشون میده
         // $parentCategories  = Category::where('parent_id', 0)->get(); 
-       
+
         $parentCategories = Category::where('id', '!=', $category->id)->get();
 
         $attributes = Attribute::all();
