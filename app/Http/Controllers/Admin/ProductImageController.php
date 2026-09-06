@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ProductImageController extends Controller
@@ -48,23 +49,87 @@ class ProductImageController extends Controller
             "image_id" => ['required', 'exists:product_images,id']
         ]);
 
-        ProductImage::destroy(  $request->image_id );
+        ProductImage::destroy($request->image_id);
 
         alert()->success('تصویر محصول  مورد نظر با موفقیت حذف شد', 'با تشکر');
 
         return redirect()->back();
     }
 
-    public function setPrimary(Request $request)
+    public function setPrimary(Request $request, Product $product)
     {
 
         $request->validate(rules: [
             "image_id" => ['required', 'exists:product_images,id']
         ]);
 
-        ProductImage::destroy(  $request->image_id );
+        $productImage =  ProductImage::findOrFail($request->image_id);
+        $product->update([
+            'primary_image' => $productImage->image
+        ]);
 
-        alert()->success('تصویر محصول  مورد نظر با موفقیت حذف شد', 'با تشکر');
+        alert()->success('ویرایش تصویر اصلی محصول با موفقیت انجام شد', 'با تشکر');
+
+        return redirect()->back();
+    }
+
+    public function add(Request $request, Product $product)
+    {
+
+        $request->validate(rules: [
+            'primary_image' => [
+                'nullable',
+                'mimes:jpg,jpeg,png,svg'
+            ],
+            'images.*' => ['nullable', 'mimes:jpg,jpeg,png,svg'],
+        ]);
+
+        if ($request->primary_image == null && $request->images == null) {
+            return redirect()->back()->withErrors(['msg' => 'تصویر اصلی یا تصاویر محصول الزامی هست']);
+        }
+
+        try {
+            DB::beginTransaction();
+
+            if ($request->has('primary_image')) {
+
+                $primaryimage = $request->file('primary_image');
+                $fileNamePrimaryImage = now()->format('Ymd_His')
+                    . '_' . Str::random(3)
+                    . '_' . $primaryimage->getClientOriginalName();
+
+                $primaryimage->move(public_path(env('PRODUCT_IMAGES_UPLOAD_PATH'),), $fileNamePrimaryImage);
+                $product->update([
+                    'primary_image' => $fileNamePrimaryImage
+                ]);
+            }
+
+            $fileNameImages = [];
+            if ($request->has('images')) {
+
+                foreach ($request->images as $image) {
+                    $fileNameImage = now()->format('Ymd_His')
+                        . '_' . Str::random(3)
+                        . '_' . $image->getClientOriginalName();
+
+                    $image->move(public_path(env('PRODUCT_IMAGES_UPLOAD_PATH')), $fileNameImage);
+
+                    ProductImage::create([
+                        'product_id' => $product->id,
+                        'image' => $fileNameImage
+                    ]);
+                }
+            }
+
+            DB::commit();
+        } catch (\Throwable $ex) {
+            DB::rollBack();
+
+            alert()->error('مشکل در ویرایش  محصول',  $ex->getMessage())->persistent('حله');
+            return redirect()->back();
+        }
+
+        alert()->success('ویرایش تصویر اصلی محصول با موفقیت انجام شد', 'با تشکر');
 
         return redirect()->back();
     }

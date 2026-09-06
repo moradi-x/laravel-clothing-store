@@ -1,3 +1,9 @@
+catch (\Throwable $ex) {
+DB::rollBack();
+
+alert()->error('مشکل در ایجاد محصول', $ex->getMessage())->persistent('حله');
+return redirect()->back();
+}
 <?php
 
 use App\Http\Controllers\admin\AttributeController;
@@ -24,16 +30,14 @@ Route::prefix('/admin-panel/management')->name('admin.')->group(function () {
 
     // edit product images
     Route::get('/products/{product}/images-edit', [ProductImageController::class, 'edit'])
-    ->name('products.images.edit');
+        ->name('products.images.edit');
 
     Route::delete('/products/{product}/images-destroy', [ProductImageController::class, 'destroy'])
-    ->name('products.images.destroy');
+        ->name('products.images.destroy');
 
     Route::put('/products/{product}/images-set-edit', [ProductImageController::class, 'setPrimary'])
-    ->name('products.images.set_primary');
+        ->name('products.images.set_primary');
 
-    Route::put('/products/{product}/image-add', [ProductImageController::class, 'add'])
-    ->name('products.images.add');
-
-
+    Route::post('/products/{product}/image-add', [ProductImageController::class, 'add'])
+        ->name('products.images.add');
 });
