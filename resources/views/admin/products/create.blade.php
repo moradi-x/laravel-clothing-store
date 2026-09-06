@@ -244,7 +244,7 @@
                     <p>تصاویر محصول :</p>
                 </div>
 
-                 {{-- انتخاب تصویر --}}
+                {{-- انتخاب تصویر --}}
                 <div class="form-group col-md-3 ">
                     <label for="primary_image">انتخاب تصویر اصلی</label>
                     <div class="custom-file">
@@ -313,8 +313,8 @@
                 {{-- هزینه اضافی --}}
                 <div class="form-group col-md-3">
                     <label for="delivery_amount_per_product"> هزینه ارسال به ازای محصول اضافی</label>
-                    <input class="form-control" id="delivery_amount_per_product" name="delivery_amount_per_product" type="text"
-                        value="{{ old('delivery_amount_per_product') }} ">
+                    <input class="form-control" id="delivery_amount_per_product" name="delivery_amount_per_product"
+                        type="text" value="{{ old('delivery_amount_per_product') }} ">
                 </div>
 
             </div>

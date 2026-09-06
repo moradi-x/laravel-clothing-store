@@ -68,11 +68,12 @@
                                             عملیات
                                         </button>
                                         <div class=" dropdown-menu">
-                                            <a href="{{ route('admin.products.edit', ['product' => $product->id ]) }}"
+                                            <a href="{{ route('admin.products.edit', ['product' => $product->id]) }}"
                                                 class="dropdown-item text-right">
                                                 ویرایش محصول
                                             </a>
-                                            <a href="{{ route('admin.products.edit', ['product' => $product]) }}"
+                                            <a href="{{ route('admin.products.images.edit',
+                                             ['product' => $product->id]) }}"
                                                 class="dropdown-item text-right">
                                                 ویرایش تصاویر
                                             </a>

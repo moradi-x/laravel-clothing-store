@@ -38,12 +38,19 @@ class ProductVariationController extends Controller
                 'sku' => $value['sku'],
                 'sale_price' => $value['sale_price'],
 
+                
                 'date_on_sale_from' => !empty($value['date_on_sale_from'])
-                    ? Verta::parseFormat('Y/m/d H:i:s', $value['date_on_sale_from'])->datetime()->format('Y-m-d H:i:s')
+                    ? Verta::parseFormat(
+                        'Y/m/d H:i:s',
+                        str_replace('-', '/', $value['date_on_sale_from'])
+                    )->formatGregorian('Y-m-d H:i:s')
                     : null,
 
                 'date_on_sale_to' => !empty($value['date_on_sale_to'])
-                    ? Verta::parseFormat('Y/m/d H:i:s', $value['date_on_sale_to'])->datetime()->format('Y-m-d H:i:s')
+                    ? Verta::parseFormat(
+                        'Y/m/d H:i:s',
+                        str_replace('-', '/', $value['date_on_sale_to'])
+                    )->formatGregorian('Y-m-d H:i:s')
                     : null,
             ]);
         }

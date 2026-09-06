@@ -169,7 +169,7 @@
 
                                                 <input type="text" class="form-control" data-jdp
                                                     name="variation_values[{{ $variation->id }}][date_on_sale_from]"
-                                                    value="{{ $variation->date_on_sale_from == null ? null : verta($variation->date_on_sale_from) }}"
+                                                    value="{{ $variation->date_on_sale_from == null ? null : verta($variation->date_on_sale_from)->format('Y/m/d H:i:s') }}"
                                                     readonly>
                                             </div>
 
@@ -187,7 +187,7 @@
 
                                                 <input type="text" class="form-control" data-jdp
                                                     name="variation_values[{{ $variation->id }}][date_on_sale_to]"
-                                                    value="{{ $variation->date_on_sale_to == null ? null : verta($variation->date_on_sale_to) }}"
+                                                    value="{{ $variation->date_on_sale_to == null ? null : verta($variation->date_on_sale_to)->format('Y/m/d H:i:s') }}"
                                                     readonly>
                                             </div>
                                         </div>
