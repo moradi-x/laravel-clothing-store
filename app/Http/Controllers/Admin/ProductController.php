@@ -17,7 +17,8 @@ class ProductController extends Controller
 
     public function index()
     {
-        //
+        $products = Product::oldest()->paginate(21);
+        return view('admin.products.index', compact('products'));
     }
 
 
@@ -120,21 +121,103 @@ class ProductController extends Controller
     }
 
 
-    public function show(string $id)
+    public function show(Product $product)
     {
-        //
+        $productAttributes = $product->attributes()->with('attribute')->get();
+        $productVariations = $product->variations;
+        $images = $product->images;
+        return view(
+            'admin.products.show',
+            compact(
+                'product',
+                'productAttributes',
+                'productVariations',
+                'images'
+            )
+        );
     }
 
 
-    public function edit(string $id)
+
+    public function edit(Product $product)
     {
-        //
+        $brands = Brand::all();
+        $tags = Tag::all();
+        $productAttributes = $product->attributes()->with('attribute')->get();
+        $productVariations = $product->variations;
+        $images = $product->images;
+        return view('admin.products.edit', compact(
+            'brands',
+            'tags',
+            'product',
+            'productAttributes',
+            'productVariations'
+        ));
     }
 
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, Product $product)
     {
-        //
+
+        // dd($request->all());
+        $request->validate([
+            'name' => ['required'],
+            'brand_id' => ['required', 'exists:brands,id'],
+            'is_active' => ['required'],
+            'tag_ids' => ['required'],
+            'tag_ids.*' => ['exists:tags,id'],
+            'description' => ['required'],
+            'attribute_values' => ['required'],
+            'variation_values' => ['required'],
+            'variation_values.*.price' => ['required', 'integer'],
+            'variation_values.*.quantity' => ['required', 'integer'],
+            'variation_values.*.sale_price' => ['nullable', 'integer'],
+            'variation_values.*.data_on_sale_from' => ['nullable', 'date'],
+            'variation_values.*.date_on_sale_to' => ['nullable', 'date'],
+
+            'delivery_amount' => ['required', 'integer'],
+            'delivery_amount_per_product' => ['nullable', 'integer'],
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            //    محصول ایجاد 
+            $product->update([
+                'name' => $request->name,
+                'brand_id' => $request->brand_id,
+                'description' => $request->description,
+                'is_active' => $request->is_active,
+                'delivery_amount' => $request->delivery_amount,
+                'delivery_amount_per_product' => $request->delivery_amount_per_product,
+            ]);
+
+            // ایجاد ویژگی
+            $ProductAttributeController =  new ProductAttributeController();
+            $ProductAttributeController->update(
+                $request->attribute_values
+            );
+
+            // ایجاد متغیر
+            $ProductVariationController =  new ProductVariationController();
+            $ProductVariationController->update(
+                $request->variation_values,
+            );
+
+            $product->tags()->sync($request->tag_ids);
+
+
+            DB::commit();
+        } catch (\Throwable $ex) {
+            DB::rollBack();
+
+            alert()->error('مشکل در ویرایش  محصول',  $ex->getMessage())->persistent('حله');
+            return redirect()->back();
+        }
+
+        alert()->success(' محصول مورد نظر با موفقیت ویرایش شد', 'با تشکر');
+
+        return redirect()->route('admin.products.index');
     }
 
 

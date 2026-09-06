@@ -8,24 +8,23 @@ use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
-    
+
     public function index()
     {
         $tags = tag::oldest()->paginate(20);
         return view('admin.tags.index', compact('tags'));
     }
 
-    
+
     public function create()
     {
         return view('admin.tags.create');
-
     }
 
-    
+
     public function store(Request $request)
     {
-           $request->validate(rules: [
+        $request->validate(rules: [
             "name" => ['required']
         ]);
 
@@ -38,24 +37,22 @@ class TagController extends Controller
         return redirect()->route('admin.tags.index');
     }
 
-   
+
     public function show(tag $tag)
     {
-                return view('admin.tags.show', compact('tag'));
-
+        return view('admin.tags.show', compact('tag'));
     }
 
-    
+
     public function edit(tag $tag)
     {
         return view('admin.tags.edit', compact('tag'));
-
     }
 
-  
+
     public function update(Request $request, tag $tag)
     {
-         $request->validate(rules: [
+        $request->validate(rules: [
             "name" => ['required']
         ]);
 
@@ -68,7 +65,7 @@ class TagController extends Controller
         return redirect()->route('admin.tags.index');
     }
 
-    
+
     public function destroy(string $id)
     {
         //

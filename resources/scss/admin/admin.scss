@@ -9,6 +9,8 @@
 // Import Bootstrap Select
 @import "~bootstrap-select/sass/bootstrap-select.scss";
 
+// @import '@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css';
+
 // Import Custom SB Admin 2 Mixins and Components
 @import "mixins.scss";
 @import "global.scss";
@@ -115,4 +117,7 @@ body {
     border-left: unset;
     border-right: inherit;
     border-radius: 0.35rem 0 0 0 .35rem;
+}
+input[readonly] {
+    background-color: #fff !important;
 }

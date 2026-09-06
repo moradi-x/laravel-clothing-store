@@ -20,6 +20,7 @@
         "vue-template-compiler": "^2.7.16"
     },
     "dependencies": {
+        "@majidh1/jalalidatepicker": "^1.0.0",
         "bootstrap": "^4.5.0",
         "bootstrap-select": "^1.13.18",
         "chart.js": "^2.9.3",

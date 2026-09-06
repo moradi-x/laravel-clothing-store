@@ -24,6 +24,9 @@
                         <tr>
                             <th> # </th>
                             <th> نام </th>
+                            <th> نام برند </th>
+                            <th> نام دسته بندی </th>
+                            <th> وضعیت </th>
                             <th> عملیات </th>
                         </tr>
                     </thead>
@@ -33,22 +36,64 @@
                                 <th>
                                     {{ $products->firstitem() + $key }}
                                 </th>
+
                                 <th>
-                                    {{ $product->name }}
+                                    <a href="{{ route('admin.products.show', ['product' => $product->id]) }}">
+                                        {{ $product->name }}
+                                    </a>
                                 </th>
 
                                 <th>
-                                    <a class="btn btn-sm btn-outline-success"
-                                        href="{{ route('admin.products.show', ['product' => $product->id]) }}">نمایش</a>
-                                    <a class="btn btn-sm btn-outline-info mr-3 "
-                                        href="{{ route('admin.products.edit', ['product' => $product->id]) }}">ویرایش</a>
+                                    <a href="{{ route('admin.brands.show', ['brand' => $product->brand->id]) }}">
+                                        {{ $product->brand->name }}
+                                    </a>
                                 </th>
+
+                                <th>
+                                    {{ $product->category->name }}
+                                </th>
+
+                                <th>
+                                    <span
+                                        class="{{ $product->getRawOriginal('is_active') ? 'text-success' : 'text-danger' }}">
+                                        {{ $product->is_active }}
+                                    </span>
+                                </th>
+
+                                <th>
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-primary dropdown-toggle"
+                                            data-toggle = 'dropdown' aria-haspopup="true" aria-expanded="false">
+                                            عملیات
+                                        </button>
+                                        <div class=" dropdown-menu">
+                                            <a href="{{ route('admin.products.edit', ['product' => $product->id ]) }}"
+                                                class="dropdown-item text-right">
+                                                ویرایش محصول
+                                            </a>
+                                            <a href="{{ route('admin.products.edit', ['product' => $product]) }}"
+                                                class="dropdown-item text-right">
+                                                ویرایش تصاویر
+                                            </a>
+                                            <a href="{{ route('admin.products.edit', ['product' => $product]) }}"
+                                                class="dropdown-item text-right">
+                                                ویرایش دسته بندی و محصول
+                                            </a>
+                                        </div>
+                                    </div>
+
+
+                                </th>
+
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-
+            <div class="d-flex justify-content-center mt-5 ">
+                {{ $products->render() }}
+            </div>
         </div>
     </div>
 @endsection

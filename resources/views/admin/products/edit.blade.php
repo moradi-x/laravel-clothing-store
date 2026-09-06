@@ -1,6 +1,17 @@
 @extends('admin.layouts.admin')
 @section('title')
-    - edit  products 
+    - edit products
+@endsection
+@section('script')
+    <script>
+        $('#brandSelect').selectpicker({
+            'title': 'انتخاب برند'
+        });
+
+        $('#tagSelect').selectpicker({
+            'title': 'انتخاب ویژگی'
+        });
+    </script>
 @endsection
 @section('content')
     <!-- Content Row -->
@@ -21,9 +32,170 @@
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="name">نام</label>
-                        <input class="form-control" id="name" name="name" type="text" value="{{ $product->name }}">
-
+                        <input class="form-control" id="name" name="name" type="text"
+                            value="{{ $product->name }}">
                     </div>
+                    {{--  برند --}}
+                    <div class="form-group col-md-3">
+                        <label for="brand_id">برند</label>
+                        <select id="brandSelect" name="brand_id" class="form-control" data-live-search= "true">
+                            @foreach ($brands as $brand)
+                                <option value="{{ $brand->id }}"
+                                    {{ $brand->id == $product->brand->id ? 'selected' : '' }}> {{ $brand->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    {{--  وضعیت --}}
+                    <div class="form-group col-md-3">
+                        <label for="is_active">وضعیت</label>
+                        <select class="form-control" id="is_active" name="is_active">
+                            <option value="1" {{ $product->getRawOriginal('is_active') == 1 ? 'selected' : '' }}
+                                selected>فعال</option>
+                            <option value="0" {{ $product->getRawOriginal('is_active') == 0 ? 'selected' : '' }}>غیر
+                                فعال </option>
+                        </select>
+                    </div>
+                    {{--  ویژگی --}}
+                    <div class="form-group col-md-3">
+                        <label for="tag_ids">تگ</label>
+                        <select id="tagSelect" name="tag_ids[]" class="form-control" multiple data-live-search= "true">
+                            @php
+                                $producTagIds = $product->tags()->pluck('id')->toArray();
+                            @endphp
+                            @foreach ($tags as $tag)
+                                <option value="{{ $tag->id }}"
+                                    {{ in_array($tag->id, $producTagIds) ? 'selected' : '' }}>
+                                    {{ $tag->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    {{--  توضیحات --}}
+                    <div class="form-group col-md-12">
+                        <label for="description">توضیحات </label>
+                        <textarea rows="4" class="form-control" id="description" name="description">{{ $product->description }}</textarea>
+                    </div>
+
+                    {{-- delivery section --}}
+                    <div class="col-md-12">
+                        <hr>
+                        <p> هزینه ارسال :</p>
+                    </div>
+                    {{-- هزینه ارسال --}}
+                    <div class="form-group col-md-3">
+                        <label for="delivery_amount">هزینه ارسال</label>
+                        <input class="form-control" id="delivery_amount" name="delivery_amount" type="text"
+                            value="{{ $product->delivery_amount }} ">
+                    </div>
+                    {{-- هزینه اضافی --}}
+                    <div class="form-group col-md-3">
+                        <label for="delivery_amount_per_product"> هزینه ارسال به ازای محصول اضافی</label>
+                        <input class="form-control" id="delivery_amount_per_product" name="delivery_amount_per_product"
+                            type="text" value="{{ $product->delivery_amount_per_product }} ">
+                    </div>
+
+                    {{-- نشان دادن ویژگی ها و متغیر  --}}
+                    <div class="col-md-12">
+                        <hr>
+                        <p>ویژگی ها :</p>
+                    </div>
+                    @foreach ($productAttributes as $productAttribute)
+                        <div class="form-group col-md-3">
+                            <label>{{ $productAttribute->attribute->name }}</label>
+                            <input class="form-control" name="attribute_values[{{ $productAttribute->id }}]"
+                                value="{{ $productAttribute->value }}" type="text">
+                        </div>
+                    @endforeach
+
+                    @foreach ($productVariations as $variation)
+                        <div class="col-md-12">
+                            <hr>
+                            <div class="d-flex">
+                                <p class="mb-0 ">قیمت و موجودی برای متغیر
+                                    ({{ $variation->value }})
+                                    :
+                                </p>
+                                <p class=" mb-0 mr-3">
+                                    <button class="btn btn-sm btn-primary" type="button" data-toggle="collapse"
+                                        data-target="#collapse-{{ $variation->id }}"> نمایش
+                                    </button>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="com-md-12">
+                            <div class="collapse mt-2 " id="collapse-{{ $variation->id }}">
+                                <div class="card card-body ">
+                                    <div class="row">
+                                        <div class="form-group col-md-3 ">
+                                            <label> قیمت </label>
+                                            <input type="text" name="variation_values[{{ $variation->id }}][price]"
+                                                class="form-control" value="{{ $variation->price }}">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="">تعداد</label>
+                                            <input type="text" class="form-control"
+                                                name="variation_values[{{ $variation->id }}][quantity]"
+                                                value="{{ $variation->quantity }}">
+                                        </div>
+
+                                        <div class="form-group col-md-3">
+                                            <label for="">sku</label>
+                                            <input type="text" class="form-control"
+                                                name="variation_values[{{ $variation->id }}][sku]"
+                                                value="{{ $variation->sku }}">
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <p>حراج : </p>
+                                        </div>
+
+                                        <div class="form-group col-md-3">
+                                            <label for="">قیمت حراجی</label>
+                                            <input type="text" class="form-control"
+                                                name="variation_values[{{ $variation->id }}][sale_price]"
+                                                value="{{ $variation->sale_price }}">
+                                        </div>
+
+                                        <div class="form-group col-md-3">
+                                            <label>تاریخ شروع حراجی</label>
+
+                                            <div class="input-group">
+                                                <div class="input-group-prepend order-2 ">
+                                                    <span class="input-group-text">
+                                                        <i class="fas fa-calendar"></i>
+                                                    </span>
+                                                </div>
+
+                                                <input type="text" class="form-control" data-jdp
+                                                    name="variation_values[{{ $variation->id }}][date_on_sale_from]"
+                                                    value="{{ $variation->date_on_sale_from == null ? null : verta($variation->date_on_sale_from) }}"
+                                                    readonly>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="form-group col-md-3">
+                                            <label>تاریخ پایان حراجی</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend order-2 ">
+                                                    <span class="input-group-text">
+                                                        <i class="fas fa-calendar"></i>
+                                                    </span>
+                                                </div>
+
+                                                <input type="text" class="form-control" data-jdp
+                                                    name="variation_values[{{ $variation->id }}][date_on_sale_to]"
+                                                    value="{{ $variation->date_on_sale_to == null ? null : verta($variation->date_on_sale_to) }}"
+                                                    readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    @endforeach
+
                 </div>
                 <button class="btn btn-outline-primary mt-5" type="submit">ویرایش</button>
                 <a href="{{ route('admin.products.index') }}" class="btn btn-dark mt-5 mr-3">بازگشت</a>
