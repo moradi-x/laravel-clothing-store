@@ -188,8 +188,8 @@
 <div class="row">
 
     <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-12 col-md-12 mb-4 p-md-5 bg-white ">
-        <div class=" mb-4">
+    <div class="col-xl-12 col-md-12 mb-4 p-4 bg-white ">
+        <div class=" mb-4 text-center text-md-right ">
             <h5 class="font-weight-bold">
                 ایجاد محصول
             </h5>
@@ -225,7 +225,7 @@
                 </div>
                 {{--  ویژگی --}}
                 <div class="form-group col-md-3">
-                    <label for="tag_ids">ویژگی</label>
+                    <label for="tag_ids">تگ </label>
                     <select id="tagSelect" name="tag_ids[]" class="form-control" multiple data-live-search= "true">
                         @foreach ($tags as $tag)
                             <option value="{{ $tag->id }}"> {{ $tag->name }}</option>

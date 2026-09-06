@@ -225,4 +225,64 @@ class ProductController extends Controller
     {
         //
     }
+    public function editCategory(Request $request, Product $product)
+    {
+        $categories = Category::where('parent_id', '!=', 0)->get();
+
+        return view('admin.products.edit_category', compact('product', 'categories'));
+    }
+
+    public function updateCategory(Request $request, Product $product)
+    {
+        $request->validate([
+
+            'category_id' => ['required'],
+            'attribute_ids' => ['required'],
+            'attribute_ids.*' => ['required'],
+            'variation_values' => ['required'],
+            'variation_values.*.*' => ['required'],
+            'variation_values.price.*' => ['integer'],
+            'variation_values.quantity.*' => ['integer']
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            //    محصول ایجاد 
+            $product->update([
+                'category_id' => $request->category_id,
+            ]);
+
+
+            // ایجاد ویژگی
+            $ProductAttributeController =  new ProductAttributeController();
+            $ProductAttributeController->change(
+                $request->attribute_ids,
+                $product
+            );
+
+            $category = Category::find($request->category_id);
+            // ایجاد متغیر
+            $ProductVariationController =  new ProductVariationController();
+            $ProductVariationController->change(
+                $request->variation_values,
+                $category
+                    ->attributes()
+                    ->wherePivot('is_variation', 1)
+                    ->first()
+                    ->id,
+                $product
+            );
+
+            DB::commit();
+            alert()->success('دسته بندی محصول با موفقیت ویرایش شد', 'با تشکر');
+            return redirect()->route('admin.products.show', ['product' => $product->id]);
+            
+        } catch (\Throwable $ex) {
+            DB::rollBack();
+
+            alert()->error('مشکل در ایجاد  محصول',  $ex->getMessage())->persistent('حله');
+            return redirect()->back();
+        }
+    }
 }

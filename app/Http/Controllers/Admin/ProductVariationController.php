@@ -38,7 +38,7 @@ class ProductVariationController extends Controller
                 'sku' => $value['sku'],
                 'sale_price' => $value['sale_price'],
 
-                
+
                 'date_on_sale_from' => !empty($value['date_on_sale_from'])
                     ? Verta::parseFormat(
                         'Y/m/d H:i:s',
@@ -52,6 +52,26 @@ class ProductVariationController extends Controller
                         str_replace('-', '/', $value['date_on_sale_to'])
                     )->formatGregorian('Y-m-d H:i:s')
                     : null,
+            ]);
+        }
+    }
+
+    public function change($variations, $attributeId, $product)
+    {
+        ProductVariation::where('product_id', $product->id)->delete();
+
+
+        $caunter = count($variations['value']);
+
+        for ($i = 0; $i < $caunter; $i++) {
+            ProductVariation::create([
+                'attribute_id' => $attributeId,
+                'product_id' => $product->id,
+                'value' => $variations['value'][$i],
+                'price' => $variations['price'][$i],
+                'quantity' => $variations['quantity'][$i],
+                'sku' => $variations['sku'][$i]
+
             ]);
         }
     }

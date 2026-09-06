@@ -8,17 +8,20 @@
     <div class="row">
 
         <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-12 col-md-12 mb-4 p-md-5 bg-white ">
-            <div class=" d-flex justify-content-between mb-4">
-                <h5 class="font-weight-bold">
+        <div class="col-xl-12 col-md-12 mb-4 p-4 bg-white ">
+            <div class=" d-flex flex-column text-center flex-md-row justify-content-md-between mb-4">
+                <h5 class="font-weight-bold mb-3 mb-0 ">
                     لیست محصول ها ( {{ $products->total() }} )
                 </h5>
-                <a class="btn btn-sm btn-outline-primary" href="{{ route('admin.products.create') }}">
-                    <i class="fa fa-plus"></i>
-                    ایجاد محصول
-                </a>
+                <div>
+                    <a class="btn btn-sm btn-outline-primary" href="{{ route('admin.products.create') }}">
+                        <i class="fa fa-plus"></i>
+                        ایجاد محصول
+                    </a>
+                </div>
             </div>
-            <div>
+
+            <div class="table-responsive">
                 <table class="table table-bordered table-striped  text-center ">
                     <thead>
                         <tr>
@@ -76,7 +79,7 @@
                                                 class="dropdown-item text-right">
                                                 ویرایش تصاویر
                                             </a>
-                                            <a href="#"
+                                            <a href="{{ route('admin.products.category.edit', ['product' => $product->id]) }}"
                                                 class="dropdown-item text-right">
                                                 ویرایش دسته بندی و محصول
                                             </a>

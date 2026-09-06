@@ -1,9 +1,3 @@
-catch (\Throwable $ex) {
-DB::rollBack();
-
-alert()->error('مشکل در ایجاد محصول', $ex->getMessage())->persistent('حله');
-return redirect()->back();
-}
 <?php
 
 use App\Http\Controllers\admin\AttributeController;
@@ -40,4 +34,12 @@ Route::prefix('/admin-panel/management')->name('admin.')->group(function () {
 
     Route::post('/products/{product}/image-add', [ProductImageController::class, 'add'])
         ->name('products.images.add');
+
+    // edit product category
+    Route::get('/products/{product}/category-edit', [ProductController::class, 'editCategory'])
+        ->name('products.category.edit');
+
+        Route::put('/products/{product}/category-update', [ProductController::class, 'updateCategory'])
+        ->name('products.category.update');
 });
+ 
