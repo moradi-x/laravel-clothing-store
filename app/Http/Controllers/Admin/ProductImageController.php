@@ -43,8 +43,6 @@ class ProductImageController extends Controller
         return  view('admin.products.edit_images', compact('product'));
     }
 
-
-
     public function destroy(Request $request)
     {
         $request->validate([
@@ -76,6 +74,19 @@ class ProductImageController extends Controller
         ]);
 
         $productImage =  ProductImage::findOrFail($request->image_id);
+
+        $oldImagePath = public_path(
+            env('PRODUCT_IMAGES_UPLOAD_PATH') . '/' . $product->primary_image
+        );
+
+        $existsInImages = ProductImage::where('product_id', $product->id)
+            ->where('image', $product->primary_image)
+            ->exists();
+
+        if (!$existsInImages && File::exists($oldImagePath)) {
+            File::delete($oldImagePath);
+        }
+
         $product->update([
             'primary_image' => $productImage->image
         ]);
@@ -106,6 +117,19 @@ class ProductImageController extends Controller
             if ($request->has('primary_image')) {
 
                 $primaryimage = $request->file('primary_image');
+
+                $oldImagePath = public_path(
+                    env('PRODUCT_IMAGES_UPLOAD_PATH') . '/' . $product->primary_image
+                );
+
+                $existsInImages = ProductImage::where('product_id', $product->id)
+                    ->where('image', $product->primary_image)
+                    ->exists();
+
+                if (!$existsInImages && File::exists($oldImagePath)) {
+                    File::delete($oldImagePath);
+                }
+
                 $fileNamePrimaryImage = now()->format('Ymd_His')
                     . '_' . Str::random(3)
                     . '_' . $primaryimage->getClientOriginalName();

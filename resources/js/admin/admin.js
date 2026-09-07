@@ -1,7 +1,5 @@
 window.$ = window.jQuery = require('jquery');
 
-
-
 require('bootstrap/dist/js/bootstrap.bundle');
 require('jquery.easing');
 require('chart.js');

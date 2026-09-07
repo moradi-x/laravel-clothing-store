@@ -94,7 +94,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../css-loader??ref--6-1!../../../postcss-loader/src??ref--6-2!./jalalidatepicker.min.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css");
+var content = __webpack_require__(/*! !../../../css-loader??ref--7-1!../../../postcss-loader/src??ref--7-2!./jalalidatepicker.min.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -26629,7 +26629,7 @@ return src;
 
 /***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css":
 /*!**************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css ***!
+  !*** ./node_modules/css-loader??ref--7-1!./node_modules/postcss-loader/src??ref--7-2!./node_modules/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css ***!
   \**************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -60409,20 +60409,18 @@ __webpack_require__(/*! @majidh1/jalalidatepicker/dist/jalalidatepicker.min.css 
   });
 
   // Close any open menu accordions when window is resized below 768px
-  $(window).resize(function () {
-    if ($(window).width() < 768) {
-      $('.sidebar .collapse').collapse('hide');
-    }
-    ;
+  if ($(window).width() < 768) {
+    $('.sidebar .collapse').collapse('hide');
+  }
+  ;
 
-    // Toggle the side navigation when window is resized below 480px
-    if ($(window).width() < 480 && !$(".sidebar").hasClass("toggled")) {
-      $("body").addClass("sidebar-toggled");
-      $(".sidebar").addClass("toggled");
-      $('.sidebar .collapse').collapse('hide');
-    }
-    ;
-  });
+  // Toggle the side navigation when window is resized below 480px
+  if ($(window).width() < 480 && !$(".sidebar").hasClass("toggled")) {
+    $("body").addClass("sidebar-toggled");
+    $(".sidebar").addClass("toggled");
+    $('.sidebar .collapse').collapse('hide');
+  }
+  ;
 
   // Prevent the content wrapper from scrolling when the fixed side navigation hovered over
   $('body.fixed-nav .sidebar').on('mousewheel DOMMouseScroll wheel', function (e) {
@@ -60470,15 +60468,27 @@ jalaliDatepicker.startWatch({
 
 /***/ }),
 
+/***/ "./resources/scss/home/home.scss":
+/*!***************************************!*\
+  !*** ./resources/scss/home/home.scss ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!*****************************************************************************!*\
-  !*** multi ./resources/js/admin/admin.js ./resources/scss/admin/admin.scss ***!
-  \*****************************************************************************/
+/*!*************************************************************************************************************!*\
+  !*** multi ./resources/js/admin/admin.js ./resources/scss/admin/admin.scss ./resources/scss/home/home.scss ***!
+  \*************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! C:\Users\Asus\Desktop\laravel clothing store\laravel-eCommerce\resources\js\admin\admin.js */"./resources/js/admin/admin.js");
-module.exports = __webpack_require__(/*! C:\Users\Asus\Desktop\laravel clothing store\laravel-eCommerce\resources\scss\admin\admin.scss */"./resources/scss/admin/admin.scss");
+__webpack_require__(/*! C:\Users\Asus\Desktop\laravel clothing store\laravel-eCommerce\resources\scss\admin\admin.scss */"./resources/scss/admin/admin.scss");
+module.exports = __webpack_require__(/*! C:\Users\Asus\Desktop\laravel clothing store\laravel-eCommerce\resources\scss\home\home.scss */"./resources/scss/home/home.scss");
 
 
 /***/ })

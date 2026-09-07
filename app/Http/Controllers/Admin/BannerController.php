@@ -84,6 +84,14 @@ class BannerController extends Controller
                 . '_' . Str::random(3)
                 . '_' . $request->image->getClientOriginalName();
 
+            $oldImagePath = public_path(
+                env('BANNER_IMAGES_UPLOAD_PATH') . '/' . $banner->image
+            );
+
+            if (File::exists($oldImagePath)) {
+                File::delete($oldImagePath);
+            }
+
             $request->image->move(public_path(env('BANNER_IMAGES_UPLOAD_PATH'),), $fileNameImage);
         }
 
@@ -116,6 +124,9 @@ class BannerController extends Controller
         }
 
         $banner->delete();
+
+        alert()->success('بنر مورد نظر با موفقیت حذف شد', 'با تشکر');
+
         return redirect()->back();
     }
 }

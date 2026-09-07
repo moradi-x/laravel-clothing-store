@@ -75,7 +75,8 @@
                                         {{ $banner->button_icon }}
                                     </th>
                                     <th style="white-space: nowrap;">
-                                        <form action="{{ route('admin.banners.destroy', ['banner' => $banner->id]) }}">
+                                        <form action="{{ route('admin.banners.destroy', 
+                                        ['banner' => $banner->id]) }}" method="post" >
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-sm btn-outline-danger" type="submit">حذف</button>
