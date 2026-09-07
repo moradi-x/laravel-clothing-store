@@ -25,8 +25,15 @@
                         <thead>
                             <tr>
                                 <th> # </th>
-                                <th> نام </th>
+                                <th> تصویر </th>
+                                <th> عنوان </th>
+                                <th> متن </th>
+                                <th> اولویت </th>
                                 <th> وضعیت </th>
+                                <th> نوع </th>
+                                <th> متن دکمه </th>
+                                <th> لینک دکمه </th>
+                                <th> ایکون دکمه </th>
                                 <th> عملیات </th>
                             </tr>
                         </thead>
@@ -37,7 +44,17 @@
                                         {{ $banners->firstitem() + $key }}
                                     </th>
                                     <th>
-                                        {{ $banner->name }}
+                                        <a target="_blank"
+                                            href="{{ url(env('BANNER_IMAGES_UPLOAD_PATH') . $banner->image) }}">{{ $banner->image }}</a>
+                                    </th>
+                                    <th>
+                                        {{ $banner->title }}
+                                    </th>
+                                    <th>
+                                        {{ $banner->text }}
+                                    </th>
+                                    <th>
+                                        {{ $banner->priority }}
                                     </th>
                                     <th>
                                         <span
@@ -45,10 +62,25 @@
                                             {{ $banner->is_active }}
                                         </span>
                                     </th>
-                                    <th  style="white-space: nowrap;">
-                                        <a class="btn btn-sm btn-outline-success"
-                                            href="{{ route('admin.banners.show', ['banner' => $banner->id]) }}">نمایش</a>
-                                        <a class="btn btn-sm btn-outline-info mr-3 "
+                                    <th>
+                                        {{ $banner->type }}
+                                    </th>
+                                    <th>
+                                        {{ $banner->button_text }}
+                                    </th>
+                                    <th>
+                                        {{ $banner->button_link }}
+                                    </th>
+                                    <th>
+                                        {{ $banner->button_icon }}
+                                    </th>
+                                    <th style="white-space: nowrap;">
+                                        <form action="{{ route('admin.banners.destroy', ['banner' => $banner->id]) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-sm btn-outline-danger" type="submit">حذف</button>
+                                        </form>
+                                        <a class="btn btn-sm btn-outline-info mr-3 mt-2 "
                                             href="{{ route('admin.banners.edit', ['banner' => $banner->id]) }}">ویرایش</a>
                                     </th>
                                 </tr>

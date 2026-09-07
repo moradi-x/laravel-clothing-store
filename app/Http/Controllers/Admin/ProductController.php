@@ -277,7 +277,6 @@ class ProductController extends Controller
             DB::commit();
             alert()->success('دسته بندی محصول با موفقیت ویرایش شد', 'با تشکر');
             return redirect()->route('admin.products.show', ['product' => $product->id]);
-            
         } catch (\Throwable $ex) {
             DB::rollBack();
 

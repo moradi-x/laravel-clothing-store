@@ -50,7 +50,7 @@
                     <div class="form-group col-md-3">
                         <label for="priority">اولویت</label>
                         <input class="form-control" id="priority" name="priority" type="number"
-                            value="{{ old('priority') }} ">
+                            value="{{ old('priority') }}">
                     </div>
 
                     <div class="form-group col-md-3">

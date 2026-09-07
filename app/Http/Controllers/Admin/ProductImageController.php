@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 class ProductImageController extends Controller
@@ -42,16 +43,27 @@ class ProductImageController extends Controller
         return  view('admin.products.edit_images', compact('product'));
     }
 
+
+
     public function destroy(Request $request)
     {
-
-        $request->validate(rules: [
-            "image_id" => ['required', 'exists:product_images,id']
+        $request->validate([
+            'image_id' => ['required', 'exists:product_images,id']
         ]);
 
-        ProductImage::destroy($request->image_id);
+        $image = ProductImage::findOrFail($request->image_id);
 
-        alert()->success('تصویر محصول  مورد نظر با موفقیت حذف شد', 'با تشکر');
+        $imagePath = public_path(
+            env('PRODUCT_IMAGES_UPLOAD_PATH') . '/' . $image->image
+        );
+
+        if (File::exists($imagePath)) {
+            File::delete($imagePath);
+        }
+
+        $image->delete();
+
+        alert()->success('تصویر محصول مورد نظر با موفقیت حذف شد', 'با تشکر');
 
         return redirect()->back();
     }
