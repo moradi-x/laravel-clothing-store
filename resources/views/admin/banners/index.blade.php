@@ -1,7 +1,7 @@
 @extends('admin.layouts.admin')
 
 @section('title')
-    - index categories
+    - index banners
 @endsection
 @section('content')
     <!-- Content Row -->
@@ -9,63 +9,47 @@
 
         <!-- Earnings (Monthly) Card Example -->
         <div class="col-xl-12 col-md-12 mb-4 p-4 bg-white ">
-            <div class=" d-flex flex-column text-center flex-md-row justify-content-md-between mb-4">
+            <div class="d-flex flex-column text-center flex-md-row justify-content-md-between mb-4">
                 <h5 class="font-weight-bold mb-3 mb-md-0">
-                    لیست دسته بندی ها ( {{ $categories->total() }} )
+                    لیست بنر ها ( {{ $banners->total() }} )
                 </h5>
-                <a class="btn btn-sm btn-outline-primary" href="{{ route('admin.categories.create') }}">
+                <a class="btn btn-sm btn-outline-primary" href="{{ route('admin.banners.create') }}">
                     <i class="fa fa-plus"></i>
-                    ایجاد دسته بندی
+                    ایجاد بنر
                 </a>
             </div>
             <div>
                 <div class="table-responsive">
+
                     <table class="table table-bordered table-striped  text-center ">
                         <thead>
                             <tr>
                                 <th> # </th>
                                 <th> نام </th>
-                                <th> نام انگلیسی </th>
-                                <th> والد </th>
                                 <th> وضعیت </th>
                                 <th> عملیات </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($categories as $key => $category)
+                            @foreach ($banners as $key => $banner)
                                 <tr>
                                     <th>
-                                        {{ $categories->firstitem() + $key }}
+                                        {{ $banners->firstitem() + $key }}
                                     </th>
-
                                     <th>
-                                        {{ $category->name }}
+                                        {{ $banner->name }}
                                     </th>
-
-                                    <th>
-                                        {{ $category->slug }}
-                                    </th>
-
-                                    <th>
-                                        @if ($category->parent_id == 0)
-                                            بدون والد
-                                        @else
-                                            {{ $category->parent->name }}
-                                        @endif
-                                    </th>
-
                                     <th>
                                         <span
-                                            class="{{ $category->getRawOriginal('is_active') ? 'text-success' : 'text-danger' }}">
-                                            {{ $category->is_active }}
+                                            class="{{ $banner->getRawOriginal('is_active') ? 'text-success' : 'text-danger' }}">
+                                            {{ $banner->is_active }}
                                         </span>
                                     </th>
-
                                     <th  style="white-space: nowrap;">
                                         <a class="btn btn-sm btn-outline-success"
-                                            href="{{ route('admin.categories.show', ['category' => $category->id]) }}">نمایش</a>
+                                            href="{{ route('admin.banners.show', ['banner' => $banner->id]) }}">نمایش</a>
                                         <a class="btn btn-sm btn-outline-info mr-3 "
-                                            href="{{ route('admin.categories.edit', ['category' => $category->id]) }}">ویرایش</a>
+                                            href="{{ route('admin.banners.edit', ['banner' => $banner->id]) }}">ویرایش</a>
                                     </th>
                                 </tr>
                             @endforeach
@@ -73,11 +57,9 @@
                     </table>
                 </div>
             </div>
-
             <div class="d-flex justify-content-center mt-5 ">
-                {{ $categories->render() }}
+                {{ $banners->render() }}
             </div>
-
         </div>
     </div>
 @endsection

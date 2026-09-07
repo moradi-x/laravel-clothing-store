@@ -8,9 +8,9 @@
     <div class="row">
 
         <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-12 col-md-12 mb-4 p-md-5 bg-white ">
-            <div class=" d-flex justify-content-between mb-4">
-                <h5 class="font-weight-bold">
+        <div class="col-xl-12 col-md-12 mb-4 p-4 bg-white ">
+            <div class=" d-flex flex-column text-center flex-md-row justify-content-md-between mb-4">
+                <h5 class="font-weight-bold  mb-3 mb-md-0 ">
                     لیست تگ ها ( {{ $tags->total() }} )
                 </h5>
                 <a class="btn btn-sm btn-outline-primary" href="{{ route('admin.tags.create') }}">
@@ -48,7 +48,9 @@
                     </tbody>
                 </table>
             </div>
-
+            <div class="d-flex justify-content-center mt-5">
+                {{ $tags->render() }}
+            </div>
         </div>
     </div>
 @endsection
